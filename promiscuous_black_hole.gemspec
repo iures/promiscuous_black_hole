@@ -3,8 +3,8 @@ Gem::Specification.new do |s|
   s.name        = 'promiscuous_black_hole'
   s.version     = '0.1.0'
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ['Crowdtap']
-  s.email       = 'devs@crowdtap.com'
+  s.authors     = ['Ben Seligman', 'Kyle Snell']
+  s.email       = ['seligman.ben@gmail.com', 'kylessnell@gmail.com']
   s.summary     = 'Normalize and record all data published through promiscuous'
   s.description = 'Normalize and record all data published through promiscuous'
   s.homepage    = 'https://github.com/crowdtap/normcore2'

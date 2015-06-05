@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+require 'newrelic_rpm'
+
+>>>>>>> origin/master
 require 'promiscuous_black_hole/locker'
 require 'promiscuous_black_hole/record'
 require 'promiscuous_black_hole/stale_embeddings_destroyer'
@@ -5,6 +10,11 @@ require 'promiscuous_black_hole/table'
 
 module Promiscuous::BlackHole
   class Operation
+<<<<<<< HEAD
+=======
+    include NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
+>>>>>>> origin/master
     def initialize(message)
       @message = message
     end
@@ -15,7 +25,13 @@ module Promiscuous::BlackHole
 
     def process
       return unless Promiscuous::BlackHole.subscribing_to?(message.base_type)
+<<<<<<< HEAD
       with_wrapped_error { process! }
+=======
+      instrumented do
+        with_wrapped_error { process! }
+      end
+>>>>>>> origin/master
     end
 
     def update_schema
@@ -79,5 +95,18 @@ module Promiscuous::BlackHole
       Promiscuous.warn "[receive] #{message.raw_message} #{e}\n#{e.backtrace.join("\n")}"
       raise e
     end
+<<<<<<< HEAD
+=======
+
+    def instrumented(&block)
+      begin
+        namespace = "Normcore2/#{message.base_type}/#{message.operation}"
+        perform_action_with_newrelic_trace(:name => namespace, :class_name => 'Subscriber', :force => true,
+                                           :category => "OtherTransaction/Promiscuous::BlackHole") do
+          block.call
+        end
+      end
+    end
+>>>>>>> origin/master
   end
 end
