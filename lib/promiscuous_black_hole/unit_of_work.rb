@@ -1,3 +1,6 @@
+require 'promiscuous_black_hole/message'
+require 'promiscuous_black_hole/operation'
+
 class Promiscuous::Subscriber::UnitOfWork
   def operations
     message.parsed_payload['operations'].map do |op|

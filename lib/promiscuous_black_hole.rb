@@ -6,7 +6,6 @@ require 'sequel'
 
 require 'promiscuous_black_hole/config'
 require 'promiscuous_black_hole/db'
-require 'promiscuous_black_hole/worker'
 require 'promiscuous_black_hole/unit_of_work'
 
 module Promiscuous::BlackHole
@@ -14,7 +13,7 @@ module Promiscuous::BlackHole
     connect
     ensure_embeddings_table
     cli = Promiscuous::CLI.new
-    cli.options[:action] = :subscribe
+    cli.options = { :action => :subscribe }
     cli.run
   end
 
