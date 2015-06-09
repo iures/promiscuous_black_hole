@@ -3,15 +3,9 @@
 > *black hole* (noun): a region of space having a gravitational field so intense that no matter or
 > radiation can escape.
 
-<<<<<<< HEAD
-At crowdtap, we love working with promiscuous. It makes it really cheap to break out
-microservices, which keeps apps small lean and agile. Unfortunately, since each
-of those small apps stores data independently, it's hard to pull all that data
-=======
 At Crowdtap, we love working with [promiscuous](https://github.com/promiscuous-io/promiscuous).
 It makes it really cheap to break out microservices, which keeps apps small lean and agile.
 Unfortunately, since each of those small apps stores data independently, it's hard to pull all that data
->>>>>>> origin/master
 back together for analysis. That's where Promiscuous::BlackHole comes in.
 
 Promiscuous::BlackHole hooks into existing data streams, automatically
