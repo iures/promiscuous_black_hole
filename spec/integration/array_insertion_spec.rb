@@ -5,7 +5,7 @@ describe Promiscuous::BlackHole do
     PublisherModel.create!(:group => [])
 
     eventually do
-      expect(DB[:publisher_models].first.keys).to_not include(:group)
+      expect(DB.table_exists?(:'publisher_model$groups')).to eq(false)
     end
   end
 
@@ -13,7 +13,7 @@ describe Promiscuous::BlackHole do
     PublisherModel.create!(:group => ['Choice', nil])
 
     eventually do
-      expect(DB[:publisher_models].first[:group]).to eq(['Choice'])
+      expect(extract_array('publisher_model', 'group')).to eq(['Choice'])
     end
   end
 
@@ -21,7 +21,7 @@ describe Promiscuous::BlackHole do
     PublisherModel.create!(:group => [false, true])
 
     eventually do
-      expect(DB[:publisher_models].first[:group]).to eq([false, true])
+      expect(extract_array('publisher_model', 'group')).to eq([false, true])
     end
   end
 
@@ -29,7 +29,7 @@ describe Promiscuous::BlackHole do
     PublisherModel.create!(:group => ['I like to "party"'])
 
     eventually do
-      expect(DB[:publisher_models].first[:group]).to eq(['I like to "party"'])
+      expect(extract_array('publisher_model', 'group')).to eq(['I like to "party"'])
     end
   end
 
@@ -37,7 +37,7 @@ describe Promiscuous::BlackHole do
     PublisherModel.create!(:group => ['2014-10-10'])
 
     eventually do
-      expect(DB[:publisher_models].first[:group]).to eq([Date.new(2014, 10, 10)])
+      expect(extract_array('publisher_model', 'group')).to eq([Date.new(2014, 10, 10)])
     end
   end
 
@@ -46,7 +46,7 @@ describe Promiscuous::BlackHole do
     PublisherModel.first.update_attributes!(:group => ['2015-02-10'])
 
     eventually do
-      expect(DB[:publisher_models].first[:group]).to eq([Date.new(2015, 2, 10)])
+      expect(extract_array('publisher_model', 'group')).to eq([Date.new(2015, 2, 10)])
     end
   end
 
@@ -54,7 +54,7 @@ describe Promiscuous::BlackHole do
     PublisherModel.create!(:group => [{'keys' => 'and values'}, { 'more keys' => 'and values' }])
 
     eventually do
-      expect(DB[:publisher_models].first[:group]).to eq("{\"{\\\"keys\\\":\\\"and values\\\"}\",\"{\\\"more keys\\\":\\\"and values\\\"}\"}")
+      expect(extract_array('publisher_model', 'group')).to eq([{ 'keys' => 'and values' }, { 'more keys' => 'and values' }])
     end
   end
 end
