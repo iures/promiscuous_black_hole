@@ -91,14 +91,8 @@ module Promiscuous::BlackHole
     end
 
     def ensure_created
-      passed_in_id = !instance_attrs['id'].nil?
       DB.create_table?(table_name) do
-        if passed_in_id
-          column :id, :char, :primary_key => true, :size => 24
-        else
-          primary_key :id
-        end
-
+        column :id, :char, :primary_key => true, :size => 24
         column :_v, :bigint
         column :_type, :varchar, :size => 255
 

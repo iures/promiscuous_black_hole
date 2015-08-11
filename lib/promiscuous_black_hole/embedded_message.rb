@@ -1,3 +1,5 @@
+require 'bson'
+
 module Promiscuous::BlackHole
   class EmbeddedMessage < Message
     def self.embedded_value?(value)
@@ -34,7 +36,7 @@ module Promiscuous::BlackHole
       end
 
       def self.from_value(_, value, parent_message)
-        value['attributes'].map { |attr| EmbeddedMessage.new(attr, parent_message) } # format for embeds_many embeddings
+        value['attributes'].map { |attr| EmbeddedMessage.new(attr, parent_message) }
       end
     end
 
@@ -44,7 +46,7 @@ module Promiscuous::BlackHole
       end
 
       def self.from_value(_, value, parent_message)
-        [ EmbeddedMessage.new(value, parent_message) ]                               # format for embeds_one embeddings
+        [ EmbeddedMessage.new(value, parent_message) ]
       end
     end
 
@@ -56,7 +58,8 @@ module Promiscuous::BlackHole
       def self.from_value(key, value, parent_message)
         message_payload = { 'types' =>["#{parent_message.base_type}$#{ key }"] }
         value.map do |element|
-          EmbeddedMessage.new(message_payload.merge('attributes' => { key => element }), parent_message)
+          custom_attrs = { 'attributes' => { key.singularize => element }, 'id' => BSON::ObjectId.new.to_s }
+          EmbeddedMessage.new(message_payload.merge(custom_attrs), parent_message)
         end
       end
     end

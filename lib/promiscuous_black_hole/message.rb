@@ -4,8 +4,6 @@ module Promiscuous::BlackHole
 
     def initialize(raw_message)
       @raw_message = raw_message
-      p '*** ' *88
-      p raw_message
     end
 
     def attributes
