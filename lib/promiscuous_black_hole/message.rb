@@ -10,17 +10,17 @@ module Promiscuous::BlackHole
       safe_raw_attributes
         .reject { |_, v| EmbeddedMessage.embedded_value?(v) }
         .merge(
-          'id'    => raw_message['id'],
           '_v'    => raw_message['version'],
           '_type' => raw_message['types'].first
-        )
+        ).tap do |attrs|
+         attrs['id'] = raw_message['id'] if raw_message['id']
+        end
     end
 
     def embedded_messages
       @embedded_messages ||= safe_raw_attributes
-        .values
-        .select   { |v| EmbeddedMessage.embedded_value?(v) }
-        .flat_map { |v| EmbeddedMessage.from_embedded_value(v, self)}
+        .select   { |k, v| EmbeddedMessage.embedded_value?(v) }
+        .flat_map { |k, v| EmbeddedMessage.from_embedded_value(k, v, self)}
     end
 
     def table_name
