@@ -6,8 +6,6 @@ module Promiscuous::BlackHole
         :"#{type_for(value.first)} array"
       when Numeric
         :float
-      when Hash
-        :json
       when /^\d{4}-\d{2}-\d{2}.\d{2}:\d{2}:\d{2}/
         :timestamptz
       when /^\d{4}-\d{2}-\d{2}$/
